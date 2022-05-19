@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { useGetPokemonByNameQuery } from "../../services/pokemon";
 
-const PokemonSearch = () => {
+export interface Props {
+    defaultPokemon?: string;
+}
 
-    const [inputText, setInputText] = useState('bulbasaur')
+const PokemonSearch = ({defaultPokemon = 'bulbasaur'}: Props) => {
+
+    const [inputText, setInputText] = useState(defaultPokemon);
     const [pokemonName, setPokemonName] = useState(inputText);
     const { data, error, isFetching, isLoading } = useGetPokemonByNameQuery(pokemonName);
 
@@ -13,7 +17,6 @@ const PokemonSearch = () => {
         }
     }
     const handleSubmit = () => setPokemonName(inputText || '');
-
     return (
         <div>
             {error ? (
@@ -28,7 +31,7 @@ const PokemonSearch = () => {
                 <>
                     <input placeholder={pokemonName} onChange={(e) => setInputText(e.target.value)} onKeyDown={handleEnter} />
                     <button onClick={handleSubmit}>Search</button>
-                    <img src={data.sprites.front_shiny || undefined} alt={data.species.name} />
+                    <img src={data.sprites.front_shiny ?? undefined} alt={data.species.name} />
                 </>
             ) : null}
         </div>

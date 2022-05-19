@@ -1,0 +1,3 @@
+v17.9.0
+# enoforces version of node to be used
+# currently msw does not work well with node 18
