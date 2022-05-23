@@ -12,11 +12,10 @@ const Container = styled.div({
 interface Props {
     page?: number;
     pageSize?: number;
-    limit?: number;
 }
 
-const PokemonList: FC<Props> = ({ page = 1, pageSize = 20, limit = 20 }) => {
-    const { data, isLoading } = useGetPokemonQuery({ limit, offset: (page - 1) * pageSize });
+const PokemonList: FC<Props> = ({ page = 1, pageSize = 20 }) => {
+    const { data, isLoading } = useGetPokemonQuery({ limit: pageSize, offset: (page - 1) * pageSize });
 
     if (isLoading) {
         return (

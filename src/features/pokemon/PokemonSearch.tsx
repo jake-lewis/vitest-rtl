@@ -1,41 +1,35 @@
-import { useState } from "react";
-import { useGetPokemonByNameQuery } from "../../services/pokemon";
+import styled from '@emotion/styled';
+import React, { useState } from 'react';
+import PokemonTile from './PokemonTile';
 
 export interface Props {
     defaultPokemon?: string;
 }
 
-const PokemonSearch = ({defaultPokemon = 'bulbasaur'}: Props) => {
+const Container = styled.div({
+    backgroundColor: '#5f6572',
+    padding: '30px',
+});
 
+const PokemonSearch = ({ defaultPokemon = 'bulbasaur' }: Props) => {
     const [inputText, setInputText] = useState(defaultPokemon);
     const [pokemonName, setPokemonName] = useState(inputText);
-    const { data, error, isFetching, isLoading } = useGetPokemonByNameQuery(pokemonName);
+
+    const handleSubmit = () => setPokemonName(inputText || '');
 
     const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             handleSubmit();
         }
-    }
-    const handleSubmit = () => setPokemonName(inputText || '');
+    };
+
     return (
-        <div>
-            {error ? (
-                <>
-                    <p aria-label={'error message'}>Oh no, there was an error</p>
-                    <input placeholder={pokemonName} onChange={(e) => setInputText(e.target.value)} onKeyDown={handleEnter} />
-                    <button onClick={handleSubmit}>Search</button>
-                </>
-            ) : isFetching || isLoading ? (
-                <>Loading...</>
-            ) : data ? (
-                <>
-                    <input placeholder={pokemonName} onChange={(e) => setInputText(e.target.value)} onKeyDown={handleEnter} />
-                    <button onClick={handleSubmit}>Search</button>
-                    <img src={data.sprites.front_shiny ?? undefined} alt={data.species.name} />
-                </>
-            ) : null}
-        </div>
-    )
+        <Container>
+            <input placeholder={pokemonName} onChange={(e) => setInputText(e.target.value)} onKeyDown={handleEnter} />
+            <button onClick={handleSubmit}>Search</button>
+            <PokemonTile name={pokemonName}/>
+        </Container>
+    );
 };
 
 export default PokemonSearch;

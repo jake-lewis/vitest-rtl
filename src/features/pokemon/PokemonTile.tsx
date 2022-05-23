@@ -7,7 +7,13 @@ interface Props {
 }
 
 const PokemonTile:FC<Props> = ({ name }) => {
-    const { data, isLoading } = useGetPokemonByNameQuery(name);
+    const { data, isLoading, error } = useGetPokemonByNameQuery(name);
+
+    if (error) {
+        return (
+            <p aria-label={'error message'}>Oh no, there was an error</p>
+        );
+    }
 
     if (isLoading) {
         return (

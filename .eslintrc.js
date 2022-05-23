@@ -43,7 +43,7 @@ module.exports = {
         'func-names': 'off',
         'global-require': 'off',
         'no-mixed-operators': 'off',
-        'max-len': ['error', 120],
+        'max-len': ['error', 180],
         'no-param-reassign': ['error', { props: false }],
         'no-underscore-dangle': ['error', { allowAfterThis: true }],
         // This one is to avoid complaining avoid invoking functions defined at the bottom of the file
