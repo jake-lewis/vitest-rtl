@@ -14,7 +14,7 @@ export const pokemonApi = createApi({
             transformResponse: (response: NamedAPIResourceList, meta, { limit, offset }) => ({ ...response, limit, offset }),
             providesTags: (resourceList) => resourceList?.results.map((resource) => ({ type: 'Pokemon' as const, id: resource.name })) ?? [],
         }),
-        getPokemonCount: builder.query<number, undefined>({
+        getPokemonCount: builder.query<number, void>({
             query: () => 'pokemon/?limit=1&offset=0',
             transformResponse: (response: NamedAPIResourceList) => response.count,
             providesTags: ['PokemonCount'],

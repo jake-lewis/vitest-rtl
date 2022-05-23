@@ -17,7 +17,7 @@ module.exports = {
         'react',
     ],
     parser: '@typescript-eslint/parser',
-    extends: ['eslint:recommended', 'airbnb-base', 'plugin:react/recommended'],
+    extends: ['eslint:recommended', 'airbnb-base', 'plugin:react/recommended', 'plugin:prettier/recommended'],
     parserOptions: {
         ecmaVersion: 6,
         sourceType: 'module',
