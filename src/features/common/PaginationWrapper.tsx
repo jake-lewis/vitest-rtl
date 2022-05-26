@@ -2,38 +2,30 @@ import {
     cloneElement, FC, ReactElement, useState, MouseEventHandler
 } from 'react';
 
-export interface Pagination {
-    page: number;
-    pageSize: number;
-    count: number;
-}
+type SetPage<S> = S | ((prevState: S) => S);
 
 interface Props {
-    count: number | undefined,
-    defaultPage?: number,
-    defaultPageSize?: number,
-    children: ReactElement<Pagination>
+    page: number;
+    setPage:  (value: SetPage<number>) => void;
+    pageSize: number;
+    setPageSize: (pageSize: number) => void;
+    count?: number;
+    children: ReactElement;
 }
 
-const PaginationWrapper: FC<Props> = ({ count = 0, defaultPage, defaultPageSize = 20, children }) => {
-    const [page, setPage] = useState(defaultPage ?? 1);
-    const [pageSize] = useState(defaultPageSize);
+const PaginationWrapper: FC<Props> = ({ count = 0, page, setPage, pageSize, children }: Props) => {
+    
     const pages = Math.ceil(count / pageSize);
 
     if (count === 0) {
         <p>empty</p>;
     }
 
-    if (!count) {
-        <p>loading</p>;
-    }
-
-    const renderedChildren = cloneElement<Pagination>(children, { page, pageSize: defaultPageSize });
     const onClickFirst = () => {
         if (page > 1) { setPage(1); }
     };
     const onClickPrev = () => {
-        if (page > 1) { setPage((currentPage) => currentPage - 1); }
+        if (page > 1) { setPage((currentPage: number) => currentPage - 1); }
     };
     const onClickNext = () => {
         if (page < pages) { setPage((currentPage) => currentPage + 1); }
@@ -51,7 +43,7 @@ const PaginationWrapper: FC<Props> = ({ count = 0, defaultPage, defaultPageSize 
 
     return (
         <div>
-            {renderedChildren}
+            {children}
             <div>
                 <button onClick={onClickFirst} disabled={page <= 1} title='First'>&lt;&lt;</button>
                 <button onClick={onClickPrev} disabled={page <= 1} title='Previous'>&lt;</button>

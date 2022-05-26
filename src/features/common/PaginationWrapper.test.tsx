@@ -10,7 +10,7 @@ describe('Pagination wrapper', () => {
 
     test('renders given page', () => {
         let page = 1;
-        const wrapper = <PaginationWrapper count={count * pageSize} defaultPage={page} defaultPageSize={pageSize}><></></PaginationWrapper>;
+        const wrapper = <PaginationWrapper count={count * pageSize} pageSize={pageSize}><></></PaginationWrapper>;
         const { getByRole } = renderWithProviders(wrapper);
 
         expect(getByRole('button', { name: '1' })).toBeDisabled();
@@ -23,7 +23,7 @@ describe('Pagination wrapper', () => {
     });
 
     describe('with first page selected', () => {
-        const wrapper = <PaginationWrapper count={count * pageSize} defaultPageSize={pageSize}><></></PaginationWrapper>;
+        const wrapper = <PaginationWrapper count={count * pageSize} ><></></PaginationWrapper>;
         test('has "first" button disabled', () => {
             const { getByRole } = renderWithProviders(wrapper);
 
@@ -52,7 +52,6 @@ describe('Pagination wrapper', () => {
     describe('with middle page selected', () => {
         const page = Math.ceil((count * pageSize) / 2);
         const wrapper = <PaginationWrapper count={count * pageSize}
-            defaultPage={page}
             defaultPageSize={pageSize}><></></PaginationWrapper>;
 
         test('"first" button sets page to 1', async () => {
